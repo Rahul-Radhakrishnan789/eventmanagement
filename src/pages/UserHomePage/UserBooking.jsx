@@ -2,7 +2,21 @@ import React, { useState, useEffect } from "react";
 import QRCode from "qrcode.react";
 import axios from "../../utils/AxiosInstance";
 
-import { Box, Card, CardContent, Grid, ListItem, ListItemIcon, ListItemText, styled, List, Chip } from "@mui/material";
+import {
+    Box,
+    Card,
+    CardContent,
+    Grid,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    styled,
+    List,
+    Chip,
+    Modal,
+    Typography,
+    Button,
+} from "@mui/material";
 
 import FoundationIcon from "@mui/icons-material/Foundation";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -85,26 +99,35 @@ export const UserBooking = () => {
         fetchData();
     }, []);
 
+    const handleClick = async (id) => {
+        try {
+            const amount = bookingData.totalAmount;
+            const razorpay_payment_id = id;
 
-    const handleClick = async() => {
-      try {
+            console.log(razorpay_payment_id);
 
-        const amount = bookingData.totalAmount
-        const  razorpay_payment_id = bookingData[0].razorpay_payment_id
+            const response = await axios.post("/api/refund", {
+                amount: amount,
+                paymentId: razorpay_payment_id,
+            });
+            console.log("Refund response:", response.data);
+        } catch (err) {
+            console.error("refund fetching error:", err);
+            console.log("Response:", err.response);
+        }
+        handleClose();
+        await fetchData();
+    };
 
-        console.log(razorpay_payment_id)
+    const [open, setOpen] = useState(false);
 
-        const response = await axios.post('/api/refund', {
-            amount: amount,
-            paymentId: razorpay_payment_id
-        });
-        console.log('Refund response:', response.data);
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
-    } catch (err) {
-      console.error("refund fetching error:", err);
-      console.log("Response:", err.response);
-    }
-    }
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <MainContainer>
@@ -115,12 +138,7 @@ export const UserBooking = () => {
                         <Grid item xs={12} sm={6} md={4} lg={3}>
                             <Cards>
                                 <ImageBox>
-                                    <QRCode
-                                        size={200}
-                                        value={event._id}
-                                        level="H"
-                                        includeMargin={true}
-                                    />
+                                    <QRCode size={200} value={event._id} level="H" includeMargin={true} />
                                 </ImageBox>
                                 <CardContents>
                                     <Lists>
@@ -153,17 +171,53 @@ export const UserBooking = () => {
                                             </ListItems>
                                         </Box>
                                         <Box sx={{ display: "flex" }}>
-                                        <ListItems>
-                                            <ListItemIcon className="listIcon">
-                                                <CurrencyRupeeIcon />
-                                            </ListItemIcon>
-                                            <ListItemText id="more" secondary={event.totalAmount} />
-                                        </ListItems>
-                                        <button onClick={handleClick}>Cancel</button>
+                                            <ListItems>
+                                                <ListItemIcon className="listIcon">
+                                                    <CurrencyRupeeIcon />
+                                                </ListItemIcon>
+                                                <ListItemText id="more" secondary={event.totalAmount} />
+                                            </ListItems>
+                                            <button onClick={handleOpen}>Cancel</button>
                                         </Box>
                                     </Lists>
                                 </CardContents>
                             </Cards>
+                            <Modal
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box
+                                    sx={{
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                        width: 400,
+                                        bgcolor: "background.paper",
+                                        boxShadow: 24,
+                                        p: 4,
+                                        borderRadius: "20px",
+                                    }}
+                                >
+                                    <Typography
+                                        id="modal-modal-description"
+                                        variant="h5"
+                                        sx={{ color: "black", textAlign: "center" }}
+                                    >
+                                        Proceed with cancellation
+                                    </Typography>
+                                    <span style={{ display: "flex", width: "100%", justifyContent: "space-around" }}>
+                                        <Button onClick={() => handleClick(event._id)} sx={{ mt: 2, color: "green" }}>
+                                            Yes
+                                        </Button>
+                                        <Button onClick={handleClose} sx={{ mt: 2, color: "red" }}>
+                                            No
+                                        </Button>
+                                    </span>
+                                </Box>
+                            </Modal>
                         </Grid>
                     ))}
                 </Grid>
