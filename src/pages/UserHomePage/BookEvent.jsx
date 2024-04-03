@@ -8,10 +8,8 @@ import {
     ListItemText,
     Typography,
     Button,
-    Modal,
-    TextField,
-    FormControl,
-} from "@mui/material"; //importing from mui
+   
+} from "@mui/material";
 import axios from "../../utils/AxiosInstance";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -25,7 +23,7 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
-import ChatBox from "../../components/userComponents/ChatBox";
+
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -391,7 +389,7 @@ const BookEvent = () => {
                     </GridItems>
                 </Grids>
             </SubContainer>
-            {/* <ChatBox/> */}
+            
         </MainContainer>
     );
 };

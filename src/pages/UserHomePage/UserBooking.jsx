@@ -209,7 +209,7 @@ export const UserBooking = () => {
                                         Proceed with cancellation
                                     </Typography>
                                     <span style={{ display: "flex", width: "100%", justifyContent: "space-around" }}>
-                                        <Button onClick={() => handleClick(event._id)} sx={{ mt: 2, color: "green" }}>
+                                        <Button onClick={() => handleClick(event.razorpay_payment_id)} sx={{ mt: 2, color: "green" }}>
                                             Yes
                                         </Button>
                                         <Button onClick={handleClose} sx={{ mt: 2, color: "red" }}>
