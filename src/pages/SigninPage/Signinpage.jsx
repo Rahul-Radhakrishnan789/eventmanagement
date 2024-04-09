@@ -7,6 +7,7 @@ import axios from "../../utils/AxiosInstance";
 import toast, { Toaster } from "react-hot-toast";
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
+import { Link } from "react-router-dom";
 
 function SignInPage() {
   const initialValues = [
@@ -135,9 +136,9 @@ color: pink[600],
 </label>
 </div>
 <div className={styles.links}>
-  <a onClick={() => navigate("/login")} href="">
+  <Link  to={"/login"} >
     Already a user ?
-  </a>
+  </Link>
 </div>
 
 
