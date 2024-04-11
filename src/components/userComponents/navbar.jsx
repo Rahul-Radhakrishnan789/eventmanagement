@@ -8,6 +8,7 @@ export default function Navbar() {
   const nav = useNavigate();
   const isSmallScreen = useMediaQuery("(max-width:850px)");
   const [popoverAnchor, setPopoverAnchor] = useState(null);
+  const [logout,setLogout] = useState(false)
 
   const handleButtonClick = (event) => {
     setPopoverAnchor(event.currentTarget);
@@ -68,17 +69,17 @@ export default function Navbar() {
               // width:'100%';
             }}
           >
-            <Button href="#" color="inherit" sx={sx.popoverButton}>
+            <Button href="#" color="inherit" sx={sx.popoverButton} onClick={() => nav("/user/events")}>
               Events
             </Button>
-            <Button href="#" color="inherit" sx={sx.popoverButton}>
-              About
+            <Button href="#" color="inherit" sx={sx.popoverButton} onClick={() => nav("/admin")}>
+              Admin
             </Button>
-            <Button href="#" color="inherit" sx={sx.popoverButton}>
+            <Button href="#" color="inherit" sx={sx.popoverButton} onClick={() => nav("/user/bookings")}>
               My Booking
             </Button>
-            <Button href="#" color="inherit" sx={sx.popoverButton}>
-              Contact
+            <Button href="#" color="inherit" sx={sx.popoverButton}  onClick={() => nav("/")}>
+              Home
             </Button>
             <Button href="#" color="inherit" sx={sx.popoverButton}>
               Login&nbsp;/&nbsp;Register
@@ -91,11 +92,11 @@ export default function Navbar() {
               <Box sx={sx.navLinks} onClick={() => nav("/user/events")}>
                 Events
               </Box>
-              <Box sx={sx.navLinks}>About</Box>
+              <Box sx={sx.navLinks} onClick={() => nav("/admin")}>Admin</Box>
               <Box sx={sx.navLinks} onClick={() => nav("/user/bookings")}>
                 My&nbsp;Booking
               </Box>
-              <Box sx={sx.navLinks}>Contact</Box>
+              <Box sx={sx.navLinks}  onClick={() => nav("/")}>Home</Box>
             </Box>
             <Box
               sx={{
@@ -109,7 +110,10 @@ export default function Navbar() {
               {localStorage.getItem("userId") ? (
                 <Box
                   onClick={() =>
-                    localStorage.removeItem("userId")
+                    {
+                      localStorage.removeItem("userId")
+                    setLogout(true)
+                  console.log('first')}
                   }
                 >
                   Logout

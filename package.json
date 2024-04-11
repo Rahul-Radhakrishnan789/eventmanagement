@@ -15,7 +15,6 @@
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
-    "@syncfusion/ej2-react-buttons": "^25.1.39",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "phosphor-react": "^1.4.1",

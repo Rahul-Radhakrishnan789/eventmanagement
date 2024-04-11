@@ -101,6 +101,7 @@ const CreateVenue = () => {
           <TextField
             label="Facilities"
             name="facilities"
+            placeholder='separate facilities with "," '
             value={formData.facilities}
             onChange={handleChange}
             sx={sx.inputBox}
@@ -108,6 +109,7 @@ const CreateVenue = () => {
           <TextField
             label="Map url"
             name="mapUrl"
+            placeholder="fetch mapurl from google maps"
             value={formData.mapUrl}
             onChange={handleChange}
             sx={sx.inputBox}
