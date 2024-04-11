@@ -22,7 +22,7 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-
+import ChatBox from "../../components/userComponents/ChatBox";
 
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -389,7 +389,7 @@ const BookEvent = () => {
                     </GridItems>
                 </Grids>
             </SubContainer>
-            
+            <ChatBox/>
         </MainContainer>
     );
 };

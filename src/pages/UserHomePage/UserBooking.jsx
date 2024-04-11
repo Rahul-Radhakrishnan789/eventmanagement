@@ -26,6 +26,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 import Navbar from "../../components/userComponents/navbar";
 import Footer from "../../components/userComponents/Footer";
+import ChatBox from "../../components/userComponents/ChatBox";
 
 const MainContainer = styled(Box)`
     padding: 0;
@@ -222,6 +223,7 @@ export const UserBooking = () => {
                     ))}
                 </Grid>
             </SubContainer>
+         
             <Footer />
         </MainContainer>
     );

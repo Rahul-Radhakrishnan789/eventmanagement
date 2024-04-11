@@ -9,6 +9,7 @@ import UserEvents from "./pages/UserHomePage/UserEvents";
 import BookEvent from "./pages/UserHomePage/BookEvent";
 import { UserBooking } from "./pages/UserHomePage/UserBooking";
 
+
 function App() {
     return (
         <div>
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/user/events" element={<UserEvents />} />
                 <Route path="/user/events/booking/:id" element={<BookEvent />} />
                 <Route path="/user/bookings" element={<UserBooking />} />
+                
             </Routes>
         </div>
     );
