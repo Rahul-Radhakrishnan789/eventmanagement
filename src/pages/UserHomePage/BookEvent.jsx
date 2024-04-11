@@ -1,15 +1,4 @@
-import {
-    Box,
-    Grid,
-    styled,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography,
-    Button,
-   
-} from "@mui/material";
+import { Box, Grid, styled, List, ListItem, ListItemIcon, ListItemText, Typography, Button } from "@mui/material";
 import axios from "../../utils/AxiosInstance";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,12 +13,24 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ChatBox from "../../components/userComponents/ChatBox";
 
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-const MainContainer = styled(Box)``;
-const SubContainer = styled(Box)``;
+const MainContainer = styled(Box)`
+
+`;
+
+const Buttons = styled(Box)`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+
+const SubContainer = styled(Box)`
+
+`;
 
 const Grids = styled(Grid)``;
 const GridItems = styled(Grid)``;
@@ -227,9 +228,12 @@ const BookEvent = () => {
     // console.log(datas);
     return (
         <MainContainer sx={{ padding: { xs: "5px", sm: "15px", lg: "30px" } }}>
-            <Button onClick={() => nav("/user/events")} sx={{ width: "fit-content", color: "white", outline: "none" }}>
-                <ArrowBackIosNewIcon />
-            </Button>
+            <Buttons>
+                <Button onClick={() => nav("/user/events")} sx={{ width: "fit-content", color: "white", outline: "none" }}>
+                    <ArrowBackIosNewIcon />
+                </Button>
+                <ChatBox />
+            </Buttons>
             <SubContainer sx={{ padding: { xs: "0", sm: "5", lg: "30px" } }}>
                 <Grids container spacing={2}>
                     <GridItems item xs={12} md={7}>
@@ -265,7 +269,7 @@ const BookEvent = () => {
                     </GridItems>
 
                     <GridItems item xs={12} md={5}>
-                        <DetailsContainer sx={{ height: { xs: "fitContent", md: "500px" } }}>
+                        <DetailsContainer sx={{ height: { xs: "fitContent", md: "auto" } }}>
                             <Typography variant="h3">{datas[0]?.title}</Typography>
                             <Lists>
                                 <ListItems
@@ -384,12 +388,22 @@ const BookEvent = () => {
                                     <button onClick={handleClick}>Book Now</button>
                                 </ListItems>
                             </Lists>
-                            <MapContainer></MapContainer>
+                            <MapContainer>
+                                <iframe
+                                    src={
+                                        datas[0]?.mapUrl ??
+                                        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4016656.570775538!2d73.49503316704077!3d10.538720521185303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0812ffd49cf55b%3A0x64bd90fbed387c99!2sKerala!5e0!3m2!1sen!2sin!4v1712819618842!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade'
+                                    }
+                                    width="100%"
+                                    height="100%"
+                                    style={{ border: "0" }}
+                                    loading="lazy"
+                                ></iframe>
+                            </MapContainer>
                         </DetailsContainer>
                     </GridItems>
                 </Grids>
             </SubContainer>
-            <ChatBox/>
         </MainContainer>
     );
 };
