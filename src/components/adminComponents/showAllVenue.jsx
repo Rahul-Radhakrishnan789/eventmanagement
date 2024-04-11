@@ -69,6 +69,7 @@ const ShowAllVenue = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    console.log(data);
 
     return (
         <MainContainer>
@@ -112,7 +113,7 @@ const ShowAllVenue = () => {
                                             <ListItemIcon className="listIcon" id="listChair">
                                                 <DownloadDoneIcon />
                                             </ListItemIcon>
-                                            <ListItemText id="facilities" secondary={"Ac, Parking lot"} />
+                                            <ListItemText id="facilities" secondary={venue.Facilities} />
                                         </ListItems>
                                     </Box>
                                 </Lists>
