@@ -10,6 +10,8 @@ export default function Navbar() {
   const [popoverAnchor, setPopoverAnchor] = useState(null);
   const [logout,setLogout] = useState(false)
 
+  const userId = localStorage.getItem("userId")
+
   const handleButtonClick = (event) => {
     setPopoverAnchor(event.currentTarget);
   };

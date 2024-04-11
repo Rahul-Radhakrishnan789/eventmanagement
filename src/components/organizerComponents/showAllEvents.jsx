@@ -97,7 +97,7 @@ function ShowAllEvents() {
                 <Grid container spacing={2} p={0}>
                     {data.map((event) => (
                         <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <Cards onClick={() => nav(`/user/events/booking/${event._id}`)}>
+                            <Cards>
                                 <ImageBox>
                                     <img src={event.image.url} alt="event Image" />
                                 </ImageBox>
