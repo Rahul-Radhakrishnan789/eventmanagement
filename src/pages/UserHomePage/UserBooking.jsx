@@ -228,5 +228,3 @@ export const UserBooking = () => {
         </MainContainer>
     );
 };
-
-// <div>hi</div>
