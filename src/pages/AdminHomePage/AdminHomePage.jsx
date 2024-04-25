@@ -1,20 +1,18 @@
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useState, useEffect } from "react";
-import axios from "../../utils/AxiosInstance";
-import ShowAllEvents from "../../components/organizerComponents/showAllEvents";
-import VenueLists from "../../components/organizerComponents/venueLists";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import { Box, styled } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
+import ShowAllEvents from "../../components/organizerComponents/showAllEvents";
 import CreateVenue from "../../components/adminComponents/createVenue";
 import ShowAllVenue from "../../components/adminComponents/showAllVenue";
+import UserTable from "../../components/adminComponents/userTable";
+import OrganizerTable from "../../components/adminComponents/organizerTable";
 
 const SideBars = styled(Sidebar)`
     .ps-sidebar-container {
@@ -24,7 +22,8 @@ const SideBars = styled(Sidebar)`
 
 const AdminHomePage = () => {
     const { collapseSidebar } = useProSidebar();
-    const [children, setChildren] = useState(<ShowAllVenue />);
+    const [children, setChildren] = useState(<ShowAllEvents />);
+    const nav = useNavigate()
 
     return (
         <>
@@ -41,12 +40,17 @@ const AdminHomePage = () => {
                             {" "}
                             <h2>Admin</h2>
                         </MenuItem>
-
-                        <MenuItem icon={<AddCircleOutlineIcon />} onClick={() => setChildren(<CreateVenue />)}>
-                            Create New Venue
+                        <MenuItem onClick={() => setChildren(<ShowAllEvents />)} icon={<PeopleOutlinedIcon />}>
+                            Events
                         </MenuItem>
-                        <MenuItem onClick={() => setChildren(<ShowAllVenue />)} icon={<PeopleOutlinedIcon />}>
-                            Venues
+                        <MenuItem onClick={() => setChildren(<UserTable />)} icon={<AssignmentIndIcon />}>
+                            Users
+                        </MenuItem>
+                        <MenuItem onClick={() => setChildren(<OrganizerTable />)} icon={<EngineeringIcon />}>
+                            Organizers
+                        </MenuItem>
+                        <MenuItem onClick={() => nav("/")} icon={<LogoutIcon />}>
+                            Logout
                         </MenuItem>
                     </Menu>
                 </SideBars>

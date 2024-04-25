@@ -8,6 +8,7 @@ import VenueDetails from "./pages/OrganizerHomePage/venueDetails";
 import UserEvents from "./pages/UserHomePage/UserEvents";
 import BookEvent from "./pages/UserHomePage/BookEvent";
 import { UserBooking } from "./pages/UserHomePage/UserBooking";
+import AdminLoginPage from "./pages/AdminHomePage/AdminLogin";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signin" element={<SignInPage />} />
                 <Route path="/organizer" element={<OrganizerHomePage />} />
+                <Route path="/adminlogin" element={<AdminLoginPage/>} />
                 <Route path="/admin" element={<AdminHomePage />} />
                 <Route path="/organizer/venue/:id" element={<VenueDetails />}></Route>
                 <Route path="/user/events" element={<UserEvents />} />

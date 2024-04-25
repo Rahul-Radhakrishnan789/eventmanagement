@@ -59,7 +59,7 @@ function SignInPage() {
       navigate("/login");
     } catch (error) {
 
-      toast.error("Access denied", {
+      toast.error(error.response.data.message, {
         duration: 3000,
         style: {
           borderRadius: "10px",
