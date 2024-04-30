@@ -130,7 +130,7 @@ function ShowAllEvents() {
             <Grid item xs={12} sm={6} md={4} lg={3}>
               <Cards onClick={() => handleCardClick(event)}>
                 <ImageBox>
-                  <img src={event.image.url} alt="event Image" />
+                  <img src={event?.image?.url} alt="event Image" />
                 </ImageBox>
                 <CardContents>
                   <Lists>
@@ -139,13 +139,13 @@ function ShowAllEvents() {
                         <ListItemIcon className="listIcon">
                           <FoundationIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={event.title} />
+                        <ListItemText secondary={event?.title} />
                       </ListItems>
                       <ListItems>
                         <ListItemIcon className="listIcon">
                           <LocationOnIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={event.venue.place} />
+                        <ListItemText secondary={event?.venue.place} />
                       </ListItems>
                     </Box>
                     <Box sx={{ display: "flex" }}>
@@ -153,13 +153,13 @@ function ShowAllEvents() {
                         <ListItemIcon className="listIcon">
                           <DateRangeIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={event.date} />
+                        <ListItemText secondary={event?.date} />
                       </ListItems>
                       <ListItems>
                         <ListItemIcon className="listIcon">
                           <CurrencyRupeeIcon />
                         </ListItemIcon>
-                        <ListItemText id="more" secondary={event.Ticketprice} />
+                        <ListItemText id="more" secondary={event?.Ticketprice} />
                       </ListItems>
                     </Box>
                   </Lists>

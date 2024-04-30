@@ -149,6 +149,10 @@ const BookEvent = () => {
 
   const userId = localStorage.getItem("userId");
 
+  const OrganizerId = datas[0]?.createdBy
+
+  console.log(datas)
+
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/getallevents");
@@ -261,7 +265,7 @@ const BookEvent = () => {
             >
               <ArrowBackIosNewIcon />
             </Button>
-            <ChatBox />
+            <ChatBox  OrganizerId={OrganizerId} />
           </Buttons>
           <SubContainer sx={{ padding: { xs: "0", sm: "5", lg: "30px" } }}>
             <Grids container spacing={2}>

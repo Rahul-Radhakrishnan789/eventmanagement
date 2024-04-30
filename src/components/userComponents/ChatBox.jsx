@@ -9,9 +9,14 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const socket = io.connect("http://localhost:3000");
 
-const ChatBox = () => {
+const ChatBox = ({OrganizerId}) => {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
+
+    // // console.log("messages",messageList)
+    // console.log("OrganizerId",OrganizerId)
+
+    const userId = localStorage.getItem("userId");
 
     const room = "12345";
 
@@ -22,40 +27,55 @@ const ChatBox = () => {
     const sendMessage = () => {
         if (currentMessage !== "") {
             const messageData = {
-                room: room,
-                userId: "660c10b053cf37f9d4d21ddb",
-                reciever: "66056e67b1170229125860a6",
+                userId: userId,
+                reciever: OrganizerId,
                 message: currentMessage,
             };
             console.log("messageData", messageData);
             socket.emit("send_message", messageData);
             setCurrentMessage("");
+            fetchMessages();
         }
     };
 
     const fetchMessages = async () => {
         try {
-            const userId = localStorage.getItem("userId");
+            const response = await axios.get(`/api/messages`);
+            const allMessages = response.data;
 
-            const response = await axios.get(`/api/messages/${userId}`);
-            setMessageList(response.data);
+            console.log("allMessages",allMessages)
+
+         
+            const filteredMessages = allMessages.filter(message => 
+                message.sender._id.toString() === userId && message.reciever.toString() === OrganizerId
+              );
+          
+        
+            setMessageList(filteredMessages);
         } catch (error) {
             console.error("Error fetching messages:", error);
         }
     };
 
+   
     useEffect(() => {
         joinRoom();
-        socket.on("receive_message", (data) => {
-            setMessageList((list) => [...list, data]);
-        });
-
         fetchMessages();
-
+    
+        socket.on("receive_message", (data) => {
+          if (data.userId === userId && data.receiver === OrganizerId || data.userId === OrganizerId && data.receiver === userId) {
+            setMessageList((prevList) => [...prevList, data]);
+          }
+        });
+    
+     
         return () => {
-            socket.off("receive_message");
+          socket.off("receive_message");
         };
-    }, [currentMessage]);
+      }, [userId, OrganizerId,currentMessage]);
+    
+
+
 
     // -----------------chatBOx-------------
 
@@ -70,16 +90,6 @@ const ChatBox = () => {
         setOpen(false);
     };
 
-    const handleMessageChange = (event) => {
-        setMessage(event.target.value);
-    };
-
-    const handleSend = () => {
-        // Add your send message logic here
-        console.log("Sending message:", message);
-        // Clear the message input after sending
-        setMessage("");
-    };
     // -----------------chatBOx-------------
 
     return (
@@ -93,7 +103,7 @@ const ChatBox = () => {
                         elevation={3}
                         sx={{
                             position: "fixed",
-                            bottom: 0,
+                            bottom: 5,
                             right: 0,
                             width: "300px",
                             height: "100%",
@@ -104,9 +114,9 @@ const ChatBox = () => {
                         <CloseIcon sx={{ cursor: "pointer" }} onClick={handleClose} />
                         <Box display="flex" flexDirection="column" height="100%">
                             <Box flexGrow={1} mb={2} sx={{ overflow: "auto" }}>
-                                {/* Chat messages can be displayed here */}
+                             
                                 {messageList.map((message, index) => (
-                                    // <div style={{flexDirection:'column'}}>
+                                 
                                     <Typography
                                         sx={{
                                             background: "#eddbdb",
@@ -123,10 +133,10 @@ const ChatBox = () => {
                                         <span style={{ fontSize: "10px" }}>{message.time}</span>
                                     </Typography>
 
-                                    // </div>
+                                  
                                 ))}
                             </Box>
-                            <Box display="flex">
+                            <Box display="flex" padding={2}>
                                 <TextField
                                     variant="standard"
                                     placeholder="Type a message..."
@@ -154,25 +164,3 @@ const ChatBox = () => {
 
 export default ChatBox;
 
-// <Container>
-// <div className="message_body">
-//   {messageList.map((message, index) => (
-//    <p>{message.message}</p>
-
-//   ))}
-// </div>
-// <div style={{ backgroundColor: '#444254', position: 'fixed', bottom: '0px', width: '100%', paddingBottom: '10px' }}>
-//   <div style={{ display: 'flex', alignItems: 'center', background: '#0a0408', borderRadius: '50px', padding: '10px' }}>
-//     <TextField
-//       variant="standard"
-//       placeholder="Type a message..."
-//       value={currentMessage}
-//       onChange={(e) => setCurrentMessage(e.target.value)}
-//       fullWidth
-//     />
-//     <IconButton color="primary" onClick={sendMessage}>
-//       <SendIcon />
-//     </IconButton>
-//   </div>
-// </div>
-// </Container>

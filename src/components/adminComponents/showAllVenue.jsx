@@ -78,7 +78,7 @@ const ShowAllVenue = () => {
                     <Grid item xs={12} sm={6} lg={3}>
                         <Cards>
                             <ImageBox>
-                                <img src={venue.images[0].url} alt="Venue Image" />
+                                <img src={venue?.images[0].url} alt="Venue Image" />
                             </ImageBox>
                             <CardContents>
                                 <Lists>
@@ -86,20 +86,20 @@ const ShowAllVenue = () => {
                                         <ListItemIcon className="listIcon">
                                             <FoundationIcon />
                                         </ListItemIcon>
-                                        <ListItemText secondary={venue.title} />
+                                        <ListItemText secondary={venue?.title} />
                                     </ListItems>
                                     <Box sx={{ display: "flex" }}>
                                         <ListItems id="listPlace">
                                             <ListItemIcon className="listIcon">
                                                 <LocationOnIcon />
                                             </ListItemIcon>
-                                            <ListItemText secondary={venue.place} />
+                                            <ListItemText secondary={venue?.place} />
                                         </ListItems>
                                         <ListItems>
                                             <ListItemIcon className="listIcon">
                                                 <CurrencyRupeeIcon />
                                             </ListItemIcon>
-                                            <ListItemText secondary={venue.price} />
+                                            <ListItemText secondary={venue?.price} />
                                         </ListItems>
                                     </Box>
                                     <Box sx={{ display: "flex" }}>
@@ -107,13 +107,13 @@ const ShowAllVenue = () => {
                                             <ListItemIcon className="listIcon">
                                                 <EventSeatIcon />
                                             </ListItemIcon>
-                                            <ListItemText secondary={venue.maximumSeats} />
+                                            <ListItemText secondary={venue?.maximumSeats} />
                                         </ListItems>
                                         <ListItems>
                                             <ListItemIcon className="listIcon" id="listChair">
                                                 <DownloadDoneIcon />
                                             </ListItemIcon>
-                                            <ListItemText id="facilities" secondary={venue.Facilities} />
+                                            <ListItemText id="facilities" secondary={venue?.Facilities} />
                                         </ListItems>
                                     </Box>
                                 </Lists>

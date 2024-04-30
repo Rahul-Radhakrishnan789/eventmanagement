@@ -89,7 +89,7 @@ const VenueLists = ({ data }) => {
             <Grid item xs={12} sm={6} lg={3}>
               <Cards onClick={() => navigate(`/organizer/venue/${venue._id}`)}>
                 <ImageBox>
-                  <img src={venue.images[0].url} alt="Venue Image" />
+                  <img src={venue?.images[0].url} alt="Venue Image" />
                 </ImageBox>
                 <CardContents>
                   <Chip
@@ -103,20 +103,20 @@ const VenueLists = ({ data }) => {
                       <ListItemIcon className="listIcon">
                         <FoundationIcon />
                       </ListItemIcon>
-                      <ListItemText id="more" secondary={venue.title} />
+                      <ListItemText id="more" secondary={venue?.title} />
                     </ListItems>
                     <Box sx={{ display: "flex" }}>
                       <ListItems id="listPlace">
                         <ListItemIcon className="listIcon">
                           <LocationOnIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={venue.place} />
+                        <ListItemText secondary={venue?.place} />
                       </ListItems>
                       <ListItems>
                         <ListItemIcon className="listIcon">
                           <CurrencyRupeeIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={venue.price} />
+                        <ListItemText secondary={venue?.price} />
                       </ListItems>
                     </Box>
                     <Box sx={{ display: "flex" }}>
@@ -124,7 +124,7 @@ const VenueLists = ({ data }) => {
                         <ListItemIcon className="listIcon">
                           <EventSeatIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={venue.maximumSeats} />
+                        <ListItemText secondary={venue?.maximumSeats} />
                       </ListItems>
                       <ListItems>
                         <ListItemIcon className="listIcon" id="listChair">
