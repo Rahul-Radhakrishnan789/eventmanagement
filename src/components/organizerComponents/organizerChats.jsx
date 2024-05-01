@@ -129,10 +129,11 @@ const ChatPage = () => {
                 alignItems: "center",
                 position: "absolute",
                 bottom: "10%",
+                right:"20%"
               }}
               onClick={handleSendEmail}
             >
-              <a style={{ marginRight: "8px", color: "#fff" }}>
+              <a style={{ marginRight: "8px", color: "#fff", }}>
                 Send Reply mail
               </a>
               <SendIcon style={{ cursor: "pointer" }} />

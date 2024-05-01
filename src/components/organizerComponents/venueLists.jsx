@@ -1,3 +1,4 @@
+import { useState,useEffect } from "react";
 import {
   Box,
   Card,
@@ -9,7 +10,12 @@ import {
   styled,
   List,
   Chip,
+  Button,
+  Modal,
+  TextField,
+  FormControl
 } from "@mui/material";
+import axios from "../../utils/AxiosInstance"
 
 import FoundationIcon from "@mui/icons-material/Foundation";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -20,13 +26,13 @@ import { useNavigate } from "react-router-dom";
 
 const MainContainer = styled(Box)``;
 const Cards = styled(Card)`
-  height: 280px;
+  height: 350px;
   width: 100%;
   cursor: pointer;
   position: relative;
 `;
 const ImageBox = styled(Box)`
-  height: 60%;
+  height: 50%;
   width: 100%;
 
   img {
@@ -76,8 +82,82 @@ const ListItems = styled(ListItem)`
 `;
 
 const VenueLists = ({ data }) => {
+  const [datas,setDatas] = useState(data);
+  const [open, setOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    place: "",
+    maximumSeats: "",
+    price:""
+  });
+
+  console.log("selectedEvent",selectedEvent)
   const navigate = useNavigate();
   console.log("datas", data);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // delete venue
+
+  const handleDeleteVenue = (venueId) => {
+    try {
+      const response = axios.delete(`/api/deletevenue/${venueId}`);
+
+      setDatas((prevEventData) =>
+        prevEventData.filter((event) => event._id !== venueId)
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error deleting organizer:", error);
+    }
+  };
+
+   //edit event
+
+   const handleEdit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put(
+        `/api/editvenue/${selectedEvent?._id}`,
+        formData
+      );    
+      console.log("editedData",response.data.data)
+      setDatas((prevData) =>
+      prevData.map((venue) =>
+        venue._id === selectedEvent?._id ? response.data.data : venue
+      )
+    );
+      setOpen(false)
+      // window.location.reload()
+    } catch (err) {
+      console.error("Error editing bid:", err);
+    }
+  };
+
+
+  useEffect(() => {
+    if (datas.length > 0 && selectedEvent?._id) {
+      const selectedBid = datas.find((bid) => bid._id === selectedEvent?._id);
+      if (selectedBid) {
+        setFormData({
+          title: selectedBid.title,
+          place: selectedBid.place,
+          Facilities: selectedBid.Facilities,
+          price: selectedBid.price,
+          maximumSeats: selectedBid.maximumSeats,
+        });
+      } else {
+        console.error("Selected bid not found");
+      }
+    }
+  }, [data, selectedEvent?._id]);
+  
+
 
   return (
     <MainContainer>
@@ -85,9 +165,9 @@ const VenueLists = ({ data }) => {
         <div>Create a venue first.</div>
       ) : (
         <Grid container spacing={2}>
-          {data.map((venue) => (
+          {datas.map((venue) => (
             <Grid item xs={12} sm={6} lg={3}>
-              <Cards onClick={() => navigate(`/organizer/venue/${venue._id}`)}>
+              <Cards>
                 <ImageBox>
                   <img src={venue?.images[0].url} alt="Venue Image" />
                 </ImageBox>
@@ -95,8 +175,9 @@ const VenueLists = ({ data }) => {
                   <Chip
                     className="availablility"
                     variant="outlined"
-                    label={venue.available ? "available" : "not available"}
+                    label={venue.available ? "Book now" : "not available"}
                     color={venue.available ? "success" : "warning"}
+                    onClick={() => navigate(`/organizer/venue/${venue._id}`)}
                   ></Chip>
                   <Lists>
                     <ListItems>
@@ -134,6 +215,98 @@ const VenueLists = ({ data }) => {
                       </ListItems>
                     </Box>
                   </Lists>
+                  
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      margin: 1.5,
+                    }}
+                  >
+                    <Box>
+                      <Button
+                        onClick={() => {
+                          setOpen(true);
+                          setSelectedEvent(venue);
+                        }}
+                        sx={{ background: "lightblue", color: "white" }}
+                      >
+                        EDIT
+                      </Button>
+                      <Modal open={open} onClose={() => setOpen(false)}>
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: 400,
+                            bgcolor: "background.paper",
+                            boxShadow: 24,
+                            p: 4,
+                          }}
+                        >
+                          <form style={{ width: "100%" }}>
+                            <Box sx={sx.form}>
+                              <TextField
+                                label="title"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                required
+                                sx={sx.inputBox}
+                              />
+                              <FormControl fullWidth>
+                                <TextField
+                                  label="place"
+                                  name="place"
+                                  value={formData.place}
+                                  onChange={handleChange}
+                                  required
+                                  sx={sx.inputBox}
+                                />
+                              </FormControl>
+                             
+                              <TextField
+                                label="price"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleChange}
+                                type="number"
+                                sx={sx.inputBox}
+                              />
+
+                              <TextField
+                                label="maximumSeats"
+                                name="maximumSeats"
+                                value={formData.maximumSeats}
+                                onChange={handleChange}
+                                type="number"
+                                required
+                                sx={sx.inputBox}
+                              />
+                              <Button
+                                sx={sx.submitButton}
+                                type="submit"
+                                variant="contained"
+                                onClick={(e) => handleEdit(e)}
+                              >
+                                Apply changes
+                              </Button>
+                            </Box>
+                          </form>
+                        </Box>
+                      </Modal>
+                    </Box>
+                    <Box>
+                      <Button
+                        sx={{ background: "red", color: "white" }}
+                        onClick={() => handleDeleteVenue(venue._id)}
+                      >
+                        DELETE
+                      </Button>
+                    </Box>
+                  </Box>
                 </CardContents>
               </Cards>
             </Grid>
@@ -145,3 +318,38 @@ const VenueLists = ({ data }) => {
 };
 
 export default VenueLists;
+
+
+const sx = {
+  mainContainer: {
+    maxWidth: { xs: "100%", sm: "70%", md: "50%" },
+    display: "flex",
+    justifyContent: "space-between",
+    overflow: "scroll",
+    margin: "0 auto",
+    padding: { xs: "0", sm: "10px" },
+  },
+  inputBox: {
+    backgroundColor: "white",
+    marginBottom: "5%",
+    borderRadius: "10px",
+  },
+  submitButton: {
+    width: "100%",
+    marginTop: "5%",
+    boxShadow: "0px 11px 16.799999237060547px rgba(0, 0, 0, 0.25)",
+    borderRadius: 20,
+    fontSize: { xs: 10, sm: 14, md: 14, lg: 14 },
+    textTransform: "none",
+    color: "#fff",
+    fontFamily: "var(--font-dmsanslight)",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "5%",
+    background: "#BFBFBF",
+    borderRadius: "10px",
+  },
+};
+

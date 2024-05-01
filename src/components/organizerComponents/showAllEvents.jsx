@@ -11,6 +11,11 @@ import {
   List,
   Typography,
   Modal,
+  Button,
+  TextField,
+  FormControl,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import axios from "../../utils/AxiosInstance";
 import FoundationIcon from "@mui/icons-material/Foundation";
@@ -28,13 +33,13 @@ const SubContainer = styled(Box)`
 `;
 
 const Cards = styled(Card)`
-  height: 280px;
+  height: 400px;
   width: 100%;
   cursor: pointer;
   position: relative;
 `;
 const ImageBox = styled(Box)`
-  height: 60%;
+  height: 50%;
   width: 100%;
 
   img {
@@ -78,9 +83,73 @@ function ShowAllEvents() {
   const [data, setData] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalTickets, setTotalTickets] = useState(0);
   const [userDetails, setUserDetails] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    description: "",
+    Ticketprice: "",
+    date:""
+  });
+
+  console.log("selectedevent", selectedEvent?._id);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // delete event
+
+  const handleDeleteEvent = (eventId) => {
+    try {
+      const response = axios.delete(`/api/deleteevent/${eventId}`);
+
+      setData((prevEventData) =>
+        prevEventData.filter((event) => event._id !== eventId)
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error deleting organizer:", error);
+    }
+  };
+
+  //edit event
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put(
+        `/api/editevent/${selectedEvent?._id}`,
+        formData
+      );    
+      window.location.reload()
+    } catch (err) {
+      console.error("Error editing bid:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (data.length > 0 && selectedEvent?._id) {
+      const selectedBid = data.find((bid) => bid._id === selectedEvent?._id);
+      if (selectedBid) {
+        setFormData({
+          title: selectedBid.title,
+          category: selectedBid.category,
+          description: selectedBid.description,
+          Ticketprice: selectedBid.Ticketprice,
+          date: selectedBid.date,
+        });
+      } else {
+        console.error("Selected bid not found");
+      }
+    }
+  }, [data, selectedEvent?._id]);
+  
 
   const handleCardClick = (event) => {
     setSelectedEvent(event);
@@ -128,7 +197,7 @@ function ShowAllEvents() {
         <Grid container spacing={2} p={0}>
           {data.map((event) => (
             <Grid item xs={12} sm={6} md={4} lg={3}>
-              <Cards onClick={() => handleCardClick(event)}>
+              <Cards>
                 <ImageBox>
                   <img src={event?.image?.url} alt="event Image" />
                 </ImageBox>
@@ -145,7 +214,7 @@ function ShowAllEvents() {
                         <ListItemIcon className="listIcon">
                           <LocationOnIcon />
                         </ListItemIcon>
-                        <ListItemText secondary={event?.venue.place} />
+                        <ListItemText secondary={event?.venue?.place} />
                       </ListItems>
                     </Box>
                     <Box sx={{ display: "flex" }}>
@@ -159,10 +228,123 @@ function ShowAllEvents() {
                         <ListItemIcon className="listIcon">
                           <CurrencyRupeeIcon />
                         </ListItemIcon>
-                        <ListItemText id="more" secondary={event?.Ticketprice} />
+                        <ListItemText
+                          id="more"
+                          secondary={event?.Ticketprice}
+                        />
                       </ListItems>
                     </Box>
                   </Lists>
+                  <Button
+                    sx={{
+                      background: "lightgreen",
+                      color: "white",
+                      width: "100%",
+                    }}
+                    onClick={() => handleCardClick(event)}
+                  >
+                    view details
+                  </Button>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      margin: 0.5,
+                    }}
+                  >
+                    <Box>
+                      <Button
+                        onClick={() => {
+                          setOpen(true);
+                          setSelectedEvent(event);
+                        }}
+                        sx={{ background: "lightblue", color: "white" }}
+                      >
+                        EDIT
+                      </Button>
+                      <Modal open={open} onClose={() => setOpen(false)}>
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: 400,
+                            bgcolor: "background.paper",
+                            boxShadow: 24,
+                            p: 4,
+                          }}
+                        >
+                          <form style={{ width: "100%" }}>
+                            <Box sx={sx.form}>
+                              <TextField
+                                label="title"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                required
+                                sx={sx.inputBox}
+                              />
+                              <FormControl fullWidth>
+                                <TextField
+                                  label="Category"
+                                  name="category"
+                                  value={formData.category}
+                                  onChange={handleChange}
+                                  required
+                                  sx={sx.inputBox}
+                                />
+                              </FormControl>
+                              <TextField
+                                label="Description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                multiline
+                                rows={4}
+                                sx={sx.inputBox}
+                              />
+                              <TextField
+                                label="Date"
+                                name="date"
+                                value={formData.date}
+                                onChange={handleChange}
+                                type="date"
+                                InputLabelProps={{ shrink: true }}
+                                sx={sx.inputBox}
+                              />
+
+                              <TextField
+                                label="Ticketprice"
+                                name="Ticketprice"
+                                value={formData.Ticketprice}
+                                onChange={handleChange}
+                                type="number"
+                                required
+                                sx={sx.inputBox}
+                              />
+                              <Button
+                                sx={sx.submitButton}
+                                type="submit"
+                                variant="contained"
+                                onClick={(e) => handleEdit(e)}
+                              >
+                                Apply changes
+                              </Button>
+                            </Box>
+                          </form>
+                        </Box>
+                      </Modal>
+                    </Box>
+                    <Box>
+                      <Button
+                        sx={{ background: "red", color: "white" }}
+                        onClick={() => handleDeleteEvent(event._id)}
+                      >
+                        DELETE
+                      </Button>
+                    </Box>
+                  </Box>
                 </CardContents>
               </Cards>
             </Grid>
@@ -214,27 +396,40 @@ function ShowAllEvents() {
           </Box>
           <Box
             sx={{
-             
-            overflowY:'scroll',
+              overflowY: "scroll",
               bgcolor: "black",
               padding: "16px",
             }}
           >
-         
             {userDetails.map((user, index) => (
-              <Box key={index}
-              sx={{
-                bgcolor: index % 2 === 0 ? "black" : "gray", 
-                color: "white", 
-                padding: "8px", 
-                marginBottom: "8px", 
-                display:'flex',
-                flexDirection:'column'
-              }}>
-               <span><Typography color={'coral'}>Username: </Typography>{user?.userId?.username}</span> 
-                <span> <Typography  color={'coral'}>Email:</Typography>  {user?.userId?.email}</span>
-                <span><Typography  color={'coral'}>Total Amount:</Typography> {user?.totalAmount} </span> 
-                <span><Typography  color={'coral'}>Total Tickets:</Typography>{user?.totalTickets}</span> 
+              <Box
+                key={index}
+                sx={{
+                  bgcolor: index % 2 === 0 ? "black" : "gray",
+                  color: "white",
+                  padding: "8px",
+                  marginBottom: "8px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <span>
+                  <Typography color={"coral"}>Username: </Typography>
+                  {user?.userId?.username}
+                </span>
+                <span>
+                  {" "}
+                  <Typography color={"coral"}>Email:</Typography>{" "}
+                  {user?.userId?.email}
+                </span>
+                <span>
+                  <Typography color={"coral"}>Total Amount:</Typography>{" "}
+                  {user?.totalAmount}{" "}
+                </span>
+                <span>
+                  <Typography color={"coral"}>Total Tickets:</Typography>
+                  {user?.totalTickets}
+                </span>
               </Box>
             ))}
           </Box>
@@ -245,3 +440,36 @@ function ShowAllEvents() {
 }
 
 export default ShowAllEvents;
+
+const sx = {
+  mainContainer: {
+    maxWidth: { xs: "100%", sm: "70%", md: "50%" },
+    display: "flex",
+    justifyContent: "space-between",
+    overflow: "scroll",
+    margin: "0 auto",
+    padding: { xs: "0", sm: "10px" },
+  },
+  inputBox: {
+    backgroundColor: "white",
+    marginBottom: "5%",
+    borderRadius: "10px",
+  },
+  submitButton: {
+    width: "100%",
+    marginTop: "5%",
+    boxShadow: "0px 11px 16.799999237060547px rgba(0, 0, 0, 0.25)",
+    borderRadius: 20,
+    fontSize: { xs: 10, sm: 14, md: 14, lg: 14 },
+    textTransform: "none",
+    color: "#fff",
+    fontFamily: "var(--font-dmsanslight)",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "5%",
+    background: "#BFBFBF",
+    borderRadius: "10px",
+  },
+};
