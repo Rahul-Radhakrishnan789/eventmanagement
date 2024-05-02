@@ -52,7 +52,7 @@ function LoginPage() {
       }
       if(response.data.type==='user'){
         localStorage.setItem("userId",response.data.Id)
-        navigate("/")
+        navigate("/user/dashboard")
       }
 
       console.log("Login successful:", response.data);

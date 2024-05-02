@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/userComponents/navbar";
 import CorouselItem from "../../components/userComponents/Corousel";
 import Footer from "../../components/userComponents/Footer";
 import Features from "../../components/userComponents/Features";
 import FAQ from "../../components/userComponents/FAQ";
+import EventStats from "../../components/userComponents/EventStats";
 import { BookNow } from "../../components/userComponents/BookNow";
+import axios from "../../utils/AxiosInstance"
+import { useState } from "react";
 
 const carouselItems = [
     {
@@ -28,6 +31,22 @@ const carouselItems = [
 ];
 
 function UserHomePage() {
+
+    const [data,setData] = useState({})
+    console.log(data)
+
+    const fetchData = async () => {
+
+         const response = await axios.get("/api/fetchstatistics")
+
+         setData(response.data.data)
+
+        
+    }
+
+    useEffect(() => {
+        fetchData()
+    },[])
     return (
         <>
             <Navbar />
@@ -37,6 +56,8 @@ function UserHomePage() {
             <Features />
 
             <FAQ />
+            
+            <EventStats data={data} />
 
             <BookNow />
 

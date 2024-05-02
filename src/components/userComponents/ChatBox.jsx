@@ -41,13 +41,13 @@ const ChatBox = ({OrganizerId}) => {
     const fetchMessages = async () => {
         try {
             const response = await axios.get(`/api/messages`);
-            const allMessages = response.data;
+            const allMessages = response.data.messages;
 
             console.log("allMessages",allMessages)
 
          
             const filteredMessages = allMessages.filter(message => 
-                message.sender._id.toString() === userId && message.reciever.toString() === OrganizerId
+                message?.sender?._id.toString() === userId && message?.reciever?.toString() === OrganizerId
               );
           
         
@@ -72,7 +72,7 @@ const ChatBox = ({OrganizerId}) => {
         return () => {
           socket.off("receive_message");
         };
-      }, [userId, OrganizerId,currentMessage]);
+      }, [userId,currentMessage]);
     
 
 

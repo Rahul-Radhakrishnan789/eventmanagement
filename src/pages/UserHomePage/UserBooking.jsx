@@ -88,8 +88,9 @@ export const UserBooking = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/fetchallbooking");
-      setBookingData(response.data?.data);
+      const userId = localStorage.getItem("userId")
+      const response = await axios.get(`/api/fetchallbooking/${userId}`);
+      setBookingData(response?.data?.data);
     } catch (err) {
       console.error("event fetching error:", err);
       console.log("Response:", err.response);
@@ -134,7 +135,7 @@ export const UserBooking = () => {
     <MainContainer>
       <Navbar />
 
-      {bookingData.length > 0 ? (
+      {bookingData?.length > 0 ? (
         <SubContainer>
           <Grid container spacing={2} p={4}>
             {bookingData.map((event) => (

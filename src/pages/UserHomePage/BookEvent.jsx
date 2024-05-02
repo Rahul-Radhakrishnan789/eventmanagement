@@ -189,7 +189,7 @@ const BookEvent = () => {
   };
 
   const handleOrders = () => {
-    nav("/user/bookings");
+    nav("/user/dashboard");
   };
 
   const initPayment = (data) => {
@@ -260,7 +260,7 @@ const BookEvent = () => {
         <MainContainer sx={{ padding: { xs: "5px", sm: "15px", lg: "30px" } }}>
           <Buttons>
             <Button
-              onClick={() => nav("/user/events")}
+              onClick={() => nav("/user/dashboard")}
               sx={{ width: "fit-content", color: "white", outline: "none" }}
             >
               <ArrowBackIosNewIcon />

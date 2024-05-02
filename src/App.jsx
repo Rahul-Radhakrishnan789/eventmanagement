@@ -9,6 +9,7 @@ import UserEvents from "./pages/UserHomePage/UserEvents";
 import BookEvent from "./pages/UserHomePage/BookEvent";
 import { UserBooking } from "./pages/UserHomePage/UserBooking";
 import AdminLoginPage from "./pages/AdminHomePage/AdminLogin";
+import UserDashBoard from "./pages/UserHomePage/UserDashBoard";
 
 
 function App() {
@@ -22,9 +23,8 @@ function App() {
                 <Route path="/adminlogin" element={<AdminLoginPage/>} />
                 <Route path="/admin" element={<AdminHomePage />} />
                 <Route path="/organizer/venue/:id" element={<VenueDetails />}></Route>
-                <Route path="/user/events" element={<UserEvents />} />
                 <Route path="/user/events/booking/:id" element={<BookEvent />} />
-                <Route path="/user/bookings" element={<UserBooking />} />
+                <Route path='/user/dashboard' element={<UserDashBoard/>} />
                 
             </Routes>
         </div>

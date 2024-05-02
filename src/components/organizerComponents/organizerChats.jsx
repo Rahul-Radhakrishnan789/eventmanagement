@@ -18,12 +18,16 @@ const ChatPage = () => {
 
   const organizerId = localStorage.getItem("organizerId");
 
+  console.log(messageList)
+
+
+
   const fetchMessages = async () => {
     try {
       const response = await axios.get(`/api/messages`);
-      const allMessages = response.data;
+      const allMessages = response.data.messages;
 
-      const filteredMessages = allMessages.filter(
+      const filteredMessages = await allMessages.filter(
         (message) => message.reciever === organizerId
       );
 
@@ -40,7 +44,7 @@ const ChatPage = () => {
   const groupMessagesBySender = (messages) => {
     const groupedMessages = [];
     messages.forEach((message) => {
-      const senderId = message.sender._id;
+      const senderId = message?.sender?._id;
       if (!groupedMessages[senderId]) {
         groupedMessages[senderId] = [message];
       } else {
@@ -74,6 +78,8 @@ const ChatPage = () => {
   };
 
   return (
+<>
+    {messageList.length > 0 ? (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
       <Grid container spacing={2}>
         <Grid item xs={3}>
@@ -92,7 +98,7 @@ const ChatPage = () => {
                   onClick={() => handleUserClick(senderId)}
                 >
                   <Typography variant="h6">
-                    {combinedMessages[senderId][0].sender.username}
+                    {combinedMessages[senderId][0]?.sender?.username}
                   </Typography>
                 </ListItem>
               ))}
@@ -102,7 +108,7 @@ const ChatPage = () => {
         <Grid item xs={9}>
           <Box flexGrow={1} mb={2} sx={{ overflow: "auto" }}>
             {messageList
-              .filter((message) => message.sender._id === selectedUser)
+              .filter((message) => message?.sender?._id === selectedUser)
               .map((message, index) => (
                 <Typography
                   key={index}
@@ -142,6 +148,10 @@ const ChatPage = () => {
         </Grid>
       </Grid>
     </Container>
+    )  : (
+      <h1>no chat available to respond</h1>
+    )}
+    </>
   );
 };
 

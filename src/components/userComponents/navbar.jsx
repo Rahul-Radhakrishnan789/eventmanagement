@@ -91,14 +91,17 @@ export default function Navbar() {
         {!isSmallScreen && (
           <>
             <Box sx={{ display: "flex" }}>
-              <Box sx={sx.navLinks} onClick={() => nav("/user/events")}>
-                Events
-              </Box>
-              <Box sx={sx.navLinks} onClick={() => nav("/adminlogin")}>Admin</Box>
-              <Box sx={sx.navLinks} onClick={() => nav("/user/bookings")}>
-                My&nbsp;Booking
-              </Box>
+            
               <Box sx={sx.navLinks}  onClick={() => nav("/")}>Home</Box>
+              <Box sx={sx.navLinks} onClick={() => nav("/adminlogin")}>Admin</Box>
+              <Box sx={sx.navLinks} onClick={() => nav("/user/dashboard") } >
+              {/* onClick={() => nav("/user/bookings")} */}
+                Services
+              </Box>
+              <Box sx={sx.navLinks}>
+              {/* onClick={() => nav("/user/events")} */}
+                Contact&nbsp;Us
+              </Box>
             </Box>
             <Box
               sx={{
