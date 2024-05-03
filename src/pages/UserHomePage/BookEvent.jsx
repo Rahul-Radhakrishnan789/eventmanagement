@@ -8,7 +8,8 @@ import {
   ListItemText,
   Typography,
   Button,
-  Modal
+  Modal,
+  IconButton,
 } from "@mui/material";
 import axios from "../../utils/AxiosInstance";
 import React, { useEffect, useState } from "react";
@@ -22,7 +23,8 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import ChatBox from "../../components/userComponents/ChatBox";
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+// import ChatBox from "../../components/userComponents/ChatBox";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -149,9 +151,16 @@ const BookEvent = () => {
 
   const userId = localStorage.getItem("userId");
 
-  const OrganizerId = datas[0]?.createdBy
+  const organizerContact = datas[0]?.createdBy?.contactNumber
 
   console.log(datas)
+
+  const handleWhatsAppAction = () => {
+    const message = "Hello, is this a good time to talk ?"; 
+    const whatsappUrl = `https://wa.me/${organizerContact}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl, "_blank");
+  };
 
   const fetchData = async () => {
     try {
@@ -258,6 +267,27 @@ const BookEvent = () => {
     <>
       {userId ? (
         <MainContainer sx={{ padding: { xs: "5px", sm: "15px", lg: "30px" } }}>
+             <Button
+        sx={{
+          position: "fixed",
+          bottom: "50px",
+          right: "20px",
+          color: "green",
+          backgroundColor: "transparent",
+          "&:hover": {
+            border:'none',
+            backgroundColor: "transparent", 
+            color: "green", 
+            transform: "rotate(360deg)",
+            transition: "transform 0.3s ease-in-out", 
+          },
+        }}
+        onClick={() => {
+          handleWhatsAppAction()
+        }}
+      >
+        <WhatsAppIcon sx={{fontSize:"50px"}} />
+      </Button>
           <Buttons>
             <Button
               onClick={() => nav("/user/dashboard")}
@@ -265,7 +295,7 @@ const BookEvent = () => {
             >
               <ArrowBackIosNewIcon />
             </Button>
-            <ChatBox  OrganizerId={OrganizerId} />
+            {/* <ChatBox  OrganizerId={OrganizerId} /> */}
           </Buttons>
           <SubContainer sx={{ padding: { xs: "0", sm: "5", lg: "30px" } }}>
             <Grids container spacing={2}>
@@ -512,6 +542,7 @@ const BookEvent = () => {
                     </span>
                   </Box>
                 </Modal>
+             
                 </>
       )}
     </>

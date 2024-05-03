@@ -25,7 +25,6 @@
     "react-material-ui-carousel": "^3.4.2",
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^6.22.2",
-    "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.8",
     "swiper": "^11.1.0"
   },

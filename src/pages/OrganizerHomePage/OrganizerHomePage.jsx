@@ -12,7 +12,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Box, styled } from "@mui/material";
-import ChatPage from "../../components/organizerComponents/organizerChats";
+// import ChatPage from "../../components/organizerComponents/organizerChats";
 
 const SideBars = styled(Sidebar)`
   .ps-sidebar-container {
@@ -76,12 +76,6 @@ function OrganizerHomePage() {
               icon={<PeopleOutlinedIcon />}
             >
               Events
-            </MenuItem>
-            <MenuItem
-              onClick={() => setChildren(<ChatPage />)}
-              icon={<MarkUnreadChatAltIcon />}
-            >
-              Chats
             </MenuItem>
             <MenuItem
               onClick={() => {

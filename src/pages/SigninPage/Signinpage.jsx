@@ -10,47 +10,40 @@ import { pink } from '@mui/material/colors';
 import { Link } from "react-router-dom";
 
 function SignInPage() {
-  const initialValues = [
-    {
-      username: "",
-      email: "",
-    },
-  ];
+  const initialValues = {
+    username: "",
+    email: "",
+    contactNumber: "", 
+  };
 
   const [signinValues, setsigninValues] = useState(initialValues);
-  const [isChecked, setIsChecked]=useState(false)
-  
-  //functionality for organizer is true or false
-      
+  const [isChecked, setIsChecked] = useState(false);
+
   const handleCheckBoxChange = (event) => {
     setIsChecked(event.target.checked);
   };
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-  
       const response = await axios.post("/api/commonregister", {
         username: signinValues.username,
         email: signinValues.email,
-        isOrganizer:isChecked
+        contactNumber: isChecked ? signinValues.contactNumber : "",
+        isOrganizer: isChecked,
       });
 
-      
       console.log("Registration successful:", response.data);
 
       const userEmail = response.data.data;
-     
-      localStorage.setItem("userEmail",userEmail)
+
+      localStorage.setItem("userEmail", userEmail);
 
       setsigninValues(initialValues);
-     
 
       navigate("/login");
     } catch (error) {
-
       toast.error(error.response.data.message, {
         duration: 3000,
         style: {
@@ -70,8 +63,6 @@ function SignInPage() {
       ...prevValues,
       [name]: value,
     }));
-
-    console.log(signinValues);
   };
 
   const navigate = useNavigate();
@@ -83,85 +74,85 @@ function SignInPage() {
           <div className={styles.img}>
             <div className={styles.formbox}>
               <form onSubmit={handleSubmit}>
-              <div className={styles.form}>
-                <h2>Register</h2>
-                <div className={styles.inputbox}>
-                  <input
-                   type="text" 
-                   name="username"
-                   value={signinValues.username}
-                    required 
-                    onChange={handleChange}
+                <div className={styles.form}>
+                  <h2>Register</h2>
+                  <div className={styles.inputbox}>
+                    <input
+                      type="text"
+                      name="username"
+                      value={signinValues.username}
+                      required
+                      onChange={handleChange}
                     />
-                  <label for="">Username</label>
-                </div>
-                <div className={styles.inputbox}>
-                  <input
-                   type="text"
-                   name="email"
-                   value={signinValues.email}
-                   onChange={handleChange}
-                    required />
-                  <label for="">Email</label>
-                </div>
+                    <label>Username</label>
+                  </div>
+                  <div className={styles.inputbox}>
+                    <input
+                      type="text"
+                      name="email"
+                      value={signinValues.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label>Email</label>
+                  </div>
+                  {isChecked && (
+                    <div className={styles.inputbox}>
+                      <input
+                        type="text"
+                        name="contactNumber"
+                        value={signinValues.contactNumber}
+                        onChange={handleChange}
+                        required={isChecked}
+                      />
+                      <label>Contact Number</label>
+                    </div>
+                  )}
 
-             <div style={{display:"flex",justifyContent:"space-around",}}>
+                  <div style={{ display: "flex", justifyContent: "space-around" }}>
+                    <div>
+                      <label>
+                        Organizer
+                        <Checkbox
+                          checked={isChecked}
+                          onChange={handleCheckBoxChange}
+                          defaultChecked={false}
+                          color="primary"
+                          sx={{
+                            color: pink[800],
+                            '&.Mui-checked': {
+                              color: pink[600],
+                            },
+                          }}
+                        />
+                      </label>
+                    </div>
+                    <div className={styles.links}>
+                      <Link to={"/login"}>Already a user ?</Link>
+                    </div>
+                  </div>
 
-             <div >
-
-<label>
-Organizer
-<Checkbox
-checked={isChecked} 
-onChange={handleCheckBoxChange}
-defaultChecked={false} 
-color="primary" 
-// inputProps={{ 'aria-label': 'isOrganizer' }} 
-sx={{
-color: pink[800],
-'&.Mui-checked': {
-color: pink[600],
-},
-}}
-/>
-
-</label>
-</div>
-<div className={styles.links}>
-  <Link  to={"/login"} >
-    Already a user ?
-  </Link>
-</div>
-
-
-
-             </div>
-
-               
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    color: "white",
-                    alignItems: "center",
-                    marginTop: "10%",
-                    "& > *": {
-                      m: 1,
-                    },
-                  }}
-                >
-
-
-                  <Button
-                   type="submit"
-                    variant="outlined"
-                    sx={{ color: "white", border: "1px solid" }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      color: "white",
+                      alignItems: "center",
+                      marginTop: "10%",
+                      "& > *": {
+                        m: 1,
+                      },
+                    }}
                   >
-                    Sign Up
-                  </Button>
-                </Box>
-              </div>
+                    <Button
+                      type="submit"
+                      variant="outlined"
+                      sx={{ color: "white", border: "1px solid" }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Box>
+                </div>
               </form>
             </div>
           </div>
@@ -171,4 +162,5 @@ color: pink[600],
     </>
   );
 }
+
 export default SignInPage;
