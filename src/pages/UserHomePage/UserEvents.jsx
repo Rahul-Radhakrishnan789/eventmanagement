@@ -20,9 +20,6 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 
-import Navbar from "../../components/userComponents/navbar";
-import Footer from "../../components/userComponents/Footer";
-
 const MainContainer = styled(Box)`
   padding: 0;
 `;
@@ -102,7 +99,7 @@ const UserEvents = () => {
 
   return (
     <MainContainer>
-      <Navbar />
+    
       {data.length > 0 ? (
         <SubContainer>
           <Grid container spacing={2} p={4}>
@@ -158,7 +155,7 @@ const UserEvents = () => {
        </Box>
       )}
 
-      <Footer />
+     
     </MainContainer>
   );
 };

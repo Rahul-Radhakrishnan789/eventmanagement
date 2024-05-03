@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { Box, TextField, Button, FormControl, FormHelperText, Snackbar, IconButton } from "@mui/material";
+import { Box, TextField, Button, FormControl, IconButton } from "@mui/material";
+import toast, { Toaster } from "react-hot-toast";
 import CloseIcon from "@mui/icons-material/Close";
 
 import axios from "../../utils/AxiosInstance";
@@ -92,12 +93,29 @@ const CreateVenue = () => {
             console.log("Registration successful:", response.data);
 
             console.log("Submitting form:", formData);
+
+            toast.success("venue created Successful", {
+                duration: 5000,
+                style: {
+                  borderRadius: "10px",
+                  color: "#000",
+                },
+              });
+
         } catch (error) {
+            toast.error(error.response.data.message, {
+                duration: 3000,
+                style: {
+                  borderRadius: "10px",
+                  background: "#e24242",
+                  color: "#fff",
+                },
+              });
             console.error("venue Registration error:", error);
             console.log("Response:", error.response);
         }
 
-        await setFormData({
+         setFormData({
             title: "",
             place: "",
             facilities: [],
@@ -107,7 +125,7 @@ const CreateVenue = () => {
             images: [],
         });
 
-        await handleClick();
+         handleClick();
     };
 
     return (
@@ -176,19 +194,13 @@ const CreateVenue = () => {
                         multiple
                         onChange={handleImageUpload}
                     />
+                    <p>Select 5 images</p>
                     <Button sx={sx.submitButton} type="submit" variant="contained">
                         Submit
                     </Button>
                 </Box>
             </form>
-            <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                message="Venue Created"
-                action={action}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            />
+            <Toaster />
         </Box>
     );
 };

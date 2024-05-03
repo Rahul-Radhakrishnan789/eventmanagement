@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import axios from "../../utils/AxiosInstance";
 
+
 function CreateEvents() {
   const [formData, setFormData] = useState({
     title: "",
@@ -64,7 +65,10 @@ function CreateEvents() {
       console.log("Registration successful:", response.data);
 
       console.log("Submitting form:", formData);
+     
+
     } catch (error) {
+    
       console.error("Event Registration error:", error);
       console.log("Response:", error.response);
     }
@@ -152,6 +156,7 @@ function CreateEvents() {
           </Button>
         </Box>
       </form>
+  
     </Box>
   );
 }

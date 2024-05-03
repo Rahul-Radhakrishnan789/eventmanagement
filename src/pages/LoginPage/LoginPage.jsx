@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Checkbox from '@mui/material/Checkbox';
@@ -70,6 +70,16 @@ function LoginPage() {
     }
   };
 
+  useEffect(() => {
+    toast.success("check email for password", {
+      duration: 5000,
+      style: {
+        borderRadius: "10px",
+        color: "#000",
+      },
+    });
+  },[userEmail])
+
   return (
     <div className={styles.mainbody}>
       <div className={styles.container}>
@@ -95,7 +105,6 @@ function LoginPage() {
                   />
                   <label for="">Password</label>
                 </div>
-
                
         <label>
         Organizer
@@ -104,7 +113,6 @@ function LoginPage() {
         onChange={handleChange}
         defaultChecked={false} 
         color="primary" 
-        // inputProps={{ 'aria-label': 'isOrganizer' }} 
         sx={{
           color: pink[800],
           '&.Mui-checked': {
@@ -137,8 +145,10 @@ function LoginPage() {
                 </Box>
               </div>
             </form>
+          
           </div>
         </div>
+       
       </div>
       <Toaster />
     </div>

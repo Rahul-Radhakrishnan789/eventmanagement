@@ -15,6 +15,7 @@ import {
   IconButton,
 } from "@mui/material";
 import axios from "../../utils/AxiosInstance";
+import toast, { Toaster } from "react-hot-toast";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -91,6 +92,8 @@ const MapContainer = styled(Box)`
 const VenueDetails = () => {
   const [data, setData] = useState([]);
   const [image, setImage] = useState([]);
+
+  console.log(data)
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -197,12 +200,27 @@ const VenueDetails = () => {
           console.log("Registration successful:", response.data);
 
           console.log("Submitting form:", formData);
+          toast.success("Event creation Successful", {
+            duration: 5000,
+            style: {
+              borderRadius: "10px",
+              color: "#000",
+            },
+          });
       } catch (error) {
+        toast.error(error.response.data.message, {
+            duration: 3000,
+            style: {
+              borderRadius: "10px",
+              background: "#e24242",
+              color: "#fff",
+            },
+          });
           console.error("Event Registration error:", error);
           console.log("Response:", error.response);
       }
 
-      await setFormData({
+       setFormData({
           title: "",
           category: "",
           description: "",
@@ -212,9 +230,9 @@ const VenueDetails = () => {
           image: null,
       });
 
-      await setOpen(false);
+       setOpen(false);
 
-      await handleClick();
+       handleClick();
   };
 
   const handleOpen = () => {
@@ -311,14 +329,6 @@ const VenueDetails = () => {
                           </DetailsContainer>
                       </GridItems>
                   </Grids>
-                  <Snackbar
-                      open={opent}
-                      autoHideDuration={6000}
-                      onClose={handleCloses}
-                      message="Event Created"
-                      action={action}
-                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                  />
               </SubContainer>
           </MainContainer>
 
@@ -399,6 +409,7 @@ const VenueDetails = () => {
                   </form>
               </Box>
           </Modal>
+          <Toaster />
       </>
   );
 };

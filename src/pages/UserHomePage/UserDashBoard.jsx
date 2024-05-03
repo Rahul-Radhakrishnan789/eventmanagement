@@ -25,7 +25,7 @@ function UserDashBoard() {
   return (
     <>
       <div style={({ height: "100vh" }, { display: "flex" })}>
-        <SideBars style={{ height: "100vh" }} defaultCollapsed={true}>
+        <SideBars style={{ height: "100vh" }}>
           <Menu>
             <MenuItem
               icon={<MenuOutlinedIcon />}
@@ -52,6 +52,14 @@ function UserDashBoard() {
               My Bookings
             </MenuItem>
           
+            <MenuItem
+              onClick={() => {
+                nav("/");
+              }}
+              icon={<LogoutIcon />}
+            >
+              Home
+            </MenuItem>
           </Menu>
         </SideBars>
         <Box sx={sx.renderComponent}>{children}</Box>

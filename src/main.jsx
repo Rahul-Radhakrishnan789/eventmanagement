@@ -6,10 +6,8 @@ import "./index.css";
 import { ProSidebarProvider } from "react-pro-sidebar";
 ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
-        <React.StrictMode>
             <ProSidebarProvider>
                 <App />
             </ProSidebarProvider>
-        </React.StrictMode>
     </BrowserRouter>
 );

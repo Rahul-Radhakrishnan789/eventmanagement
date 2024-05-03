@@ -41,14 +41,6 @@ function SignInPage() {
       
       console.log("Registration successful:", response.data);
 
-      toast.success("Please check for OTP in your mail", {
-        duration: 3000,
-        style: {
-          borderRadius: "10px",
-          color: "#000",
-        },
-      });
-
       const userEmail = response.data.data;
      
       localStorage.setItem("userEmail",userEmail)
