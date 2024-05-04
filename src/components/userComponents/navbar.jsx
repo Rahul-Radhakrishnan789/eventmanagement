@@ -72,19 +72,31 @@ export default function Navbar() {
               // width:'100%';
             }}
           >
-            <Button href="#" color="inherit" sx={sx.popoverButton} onClick={() => nav("/user/events")}>
-              Events
-            </Button>
+             <ScrollLink
+                to="targetFeatures"
+                href="#"
+                smooth={true}
+                duration={1500}
+                style={linkStyle}
+              >
+                 Services
+              </ScrollLink>
             <Button href="#" color="inherit" sx={sx.popoverButton} onClick={() => nav("/adminlogin")}>
               Admin
             </Button>
-            <Button href="#" color="inherit" sx={sx.popoverButton} onClick={() => nav("/user/bookings")}>
-              My Booking
-            </Button>
+            <ScrollLink
+                to="targetFooter"
+                href="#"
+                smooth={true}
+                duration={1500}
+                style={linkStyle}
+              >
+                 Contact&nbsp;Us
+              </ScrollLink>
             <Button href="#" color="inherit" sx={sx.popoverButton}  onClick={() => nav("/")}>
               Home
             </Button>
-            <Button href="#" color="inherit" sx={sx.popoverButton}>
+            <Button onClick={() => nav("/signin")} color="inherit" sx={sx.popoverButton}>
               Login&nbsp;/&nbsp;Register
             </Button>
           </div>
@@ -171,5 +183,5 @@ const linkStyle = {
   fontFamily: "var(--font-dmsans)",
   cursor: "pointer",
   textDecoration:"none",  
-  color:"white"
+  color:"inherit"
 };
