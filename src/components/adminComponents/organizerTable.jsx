@@ -77,8 +77,9 @@ const OrganizerTable = () => {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>Ventor name</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Ventor mail</TableCell>
+                  <TableCell sx={{ fontWeight: 700 }}> name</TableCell>
+                  <TableCell sx={{ fontWeight: 700 }}> mail</TableCell>
+                  <TableCell sx={{ fontWeight: 700 }}>contact</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -86,10 +87,11 @@ const OrganizerTable = () => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <TableRow key={row._id}>
-                      <TableCell sx={{ minWidth: "250px" }}>
+                      <TableCell sx={{ minWidth: "100px" }}>
                         {row.username}
                       </TableCell>
                       <TableCell>{row.email}</TableCell>
+                      <TableCell>{row.contactNumber}</TableCell>
                       <TableCell>
                         <Button
                           variant="contained"

@@ -54,11 +54,12 @@ function UserDashBoard() {
           
             <MenuItem
               onClick={() => {
+                localStorage.removeItem("userId")
                 nav("/");
               }}
               icon={<LogoutIcon />}
             >
-              Home
+              Logout
             </MenuItem>
           </Menu>
         </SideBars>

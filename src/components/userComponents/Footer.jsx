@@ -10,7 +10,7 @@ import {
 export default function Footer() {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
-    <Container sx={sx.mainContainer}>
+    <Container  id="targetFooter" sx={sx.mainContainer}>
       <Box
         sx={{
           display: "flex",

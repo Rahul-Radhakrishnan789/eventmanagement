@@ -8,7 +8,7 @@ const EventStats = ({data}) => {
       <Grid container spacing={6} >
         <Grid item xs={4} sx={sx.gridItem}>
           <Typography variant="h4">
-            {data?.userNumber}+
+            {data?.eventNumber}+
           </Typography>
           <Typography variant="body2"  sx={sx.gridItem}>
             Events

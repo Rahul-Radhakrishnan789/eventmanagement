@@ -163,8 +163,11 @@ function ShowAllEvents() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/getallevents");
+
+      const organizerId = localStorage.getItem("organizerId")
+      const response = await axios.get(`/api/getallevents/${organizerId}`);
       setData(response.data.data);
+      
     } catch (err) {
       console.error("event fetching error:", err);
       console.log("Response:", err.response);

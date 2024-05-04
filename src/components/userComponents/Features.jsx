@@ -2,7 +2,7 @@ import { Grid, Paper, Typography, Box } from "@mui/material";
 
 export default function Features() {
   return (
-    <Grid sx={{ flexGrow: 1, paddingY: "2%" }} container spacing={2}>
+    <Grid sx={{ flexGrow: 1, paddingY: "2%" }} container spacing={2} id="targetFeatures">
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={6}>
           <Grid item>

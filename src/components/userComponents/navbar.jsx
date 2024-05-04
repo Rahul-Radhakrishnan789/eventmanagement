@@ -3,6 +3,7 @@ import { Box, useMediaQuery, Popover, Button } from "@mui/material";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link as ScrollLink } from "react-scroll";
 
 export default function Navbar() {
   const nav = useNavigate();
@@ -94,14 +95,24 @@ export default function Navbar() {
             
               <Box sx={sx.navLinks}  onClick={() => nav("/")}>Home</Box>
               <Box sx={sx.navLinks} onClick={() => nav("/adminlogin")}>Admin</Box>
-              <Box sx={sx.navLinks} onClick={() => nav("/user/dashboard") } >
-              {/* onClick={() => nav("/user/bookings")} */}
-                Services
-              </Box>
-              <Box sx={sx.navLinks}>
-              {/* onClick={() => nav("/user/events")} */}
-                Contact&nbsp;Us
-              </Box>
+              <ScrollLink
+                to="targetFeatures"
+                href="#"
+                smooth={true}
+                duration={1500}
+                style={linkStyle}
+              >
+                 Services
+              </ScrollLink>
+              <ScrollLink
+                to="targetFooter"
+                href="#"
+                smooth={true}
+                duration={1500}
+                style={linkStyle}
+              >
+                 Contact&nbsp;Us
+              </ScrollLink>
             </Box>
             <Box
               sx={{
@@ -151,4 +162,14 @@ const sx = {
   popoverButton: {
     textTransform: "none",
   },
+};
+
+
+const linkStyle = {
+  marginRight:"10%",
+  fontSize: "100%",
+  fontFamily: "var(--font-dmsans)",
+  cursor: "pointer",
+  textDecoration:"none",  
+  color:"white"
 };
