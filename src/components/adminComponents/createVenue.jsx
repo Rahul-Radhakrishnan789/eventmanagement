@@ -190,7 +190,6 @@ const CreateVenue = () => {
                         type="file"
                         name="images"
                         accept=".png, .jpg, .jpeg"
-                        maxfilesize={10000000}
                         multiple
                         onChange={handleImageUpload}
                     />

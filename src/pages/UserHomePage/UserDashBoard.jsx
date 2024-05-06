@@ -8,6 +8,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import UserEvents from "./UserEvents";
 import { UserBooking } from "./UserBooking";
 import { Box, styled } from "@mui/material";
+import axios from "../../utils/AxiosInstance"
 
 const SideBars = styled(Sidebar)`
   .ps-sidebar-container {
@@ -21,6 +22,37 @@ function UserDashBoard() {
 
   const { collapseSidebar } = useProSidebar();
   const [children, setChildren] = useState(<UserEvents />);
+  const [userName,setUsername] = useState("")
+
+  const fetchName = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+     
+  
+    
+      if (userId) {
+      
+        const id = userId ;
+      
+        const response = await axios.get(`/api/getname/${id}`); 
+
+        setUsername(response?.data?.data?.userName)
+  
+        console.log('Name fetched successfully:', response.data);
+        return response.data;
+      } else {
+        console.log('No userId or organizerId found in localStorage');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching name:', error);
+      throw error;
+    }
+  }
+
+  useEffect(() => {
+    fetchName()
+  },[])
 
   return (
     <>
@@ -35,7 +67,7 @@ function UserDashBoard() {
               style={{ textAlign: "center" }}
             >
               {" "}
-              <h2>Hello User</h2>
+              <h2>Hello {userName}</h2>
             </MenuItem>
         
 

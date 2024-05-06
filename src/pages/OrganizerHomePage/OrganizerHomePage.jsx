@@ -23,6 +23,7 @@ const SideBars = styled(Sidebar)`
 function OrganizerHomePage() {
   const nav = useNavigate();
   const [data, setData] = useState([]);
+  const [organizerName,setOrganizerName] = useState('')
 
   const fetchData = async () => {
     try {
@@ -35,8 +36,35 @@ function OrganizerHomePage() {
     }
   };
 
+  const fetchName = async () => {
+    try {
+      const organizerId = localStorage.getItem('organizerId');
+     
+  
+    
+      if (organizerId) {
+      
+        const id = organizerId ;
+      
+        const response = await axios.get(`/api/getname/${id}`); 
+
+        setOrganizerName(response?.data?.data?.organizerName)
+  
+        console.log('Name fetched successfully:', response.data);
+        return response.data;
+      } else {
+        console.log('No userId or organizerId found in localStorage');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching name:', error);
+      throw error;
+    }
+  }
+
   useEffect(() => {
     fetchData();
+    fetchName()
   }, []);
   console.log(data);
 
@@ -56,7 +84,7 @@ function OrganizerHomePage() {
               style={{ textAlign: "center" }}
             >
               {" "}
-              <h2>Organizer</h2>
+              <h2> hello {organizerName}</h2>
             </MenuItem>
             <MenuItem
               icon={<AddBoxIcon />}
