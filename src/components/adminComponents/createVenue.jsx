@@ -95,12 +95,16 @@ const CreateVenue = () => {
             console.log("Submitting form:", formData);
 
             toast.success("venue created Successful", {
-                duration: 5000,
+                duration: 3000,
                 style: {
                   borderRadius: "10px",
                   color: "#000",
                 },
               });
+
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
 
         } catch (error) {
             toast.error(error.response.data.message, {
