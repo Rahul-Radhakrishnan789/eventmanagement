@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import styles from "./signinpage.module.css";
 import axios from "../../utils/AxiosInstance";
 import toast, { Toaster } from "react-hot-toast";
-import Checkbox from '@mui/material/Checkbox';
-import { pink } from '@mui/material/colors';
+import Checkbox from "@mui/material/Checkbox";
+import { pink } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
 function SignInPage() {
   const initialValues = {
     username: "",
     email: "",
-    contactNumber: "", 
+    contactNumber: "",
   };
 
   const [signinValues, setsigninValues] = useState(initialValues);
@@ -99,17 +99,24 @@ function SignInPage() {
                   {isChecked && (
                     <div className={styles.inputbox}>
                       <input
-                        type="text"
+                        type="number"
                         name="contactNumber"
                         value={signinValues.contactNumber}
                         onChange={handleChange}
                         required={isChecked}
                       />
                       <label>Contact Number</label>
+                      {signinValues.contactNumber.length !== 10 && (
+                        <span color="">
+                          Mobile number must be 10 digits
+                        </span>
+                      )}
                     </div>
                   )}
 
-                  <div style={{ display: "flex", justifyContent: "space-around" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-around" }}
+                  >
                     <div>
                       <label>
                         Organizer
@@ -120,7 +127,7 @@ function SignInPage() {
                           color="primary"
                           sx={{
                             color: pink[800],
-                            '&.Mui-checked': {
+                            "&.Mui-checked": {
                               color: pink[600],
                             },
                           }}
