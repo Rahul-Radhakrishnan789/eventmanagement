@@ -307,7 +307,7 @@ const BookEvent = () => {
                       slidesPerView={1}
                       style={{ height: "100%", width: "100%" }}
                     >
-                      {images.map((img) => (
+                      {images?.map((img) => (
                         <SwiperSlide id="swipe">
                           <img src={img?.url} alt="" />
                         </SwiperSlide>
@@ -327,7 +327,7 @@ const BookEvent = () => {
                         {datas[0]?.description}
                       </Typography>
                       <List sx={{ width: "100%", display: "flex" }}>
-                        {datas[0]?.venue.Facilities.map((amenity, index) => (
+                        {datas[0]?.venue?.Facilities?.map((amenity, index) => (
                           <ListItem key={index} sx={{ width: "fitContent" }}>
                             <ListItemIcon sx={{ minWidth: "30px" }}>
                               <CheckCircleIcon
@@ -367,7 +367,7 @@ const BookEvent = () => {
                           <FoundationIcon />
                         </ListItemIcon>
                         <ListItemText
-                          primary={datas[0]?.venue.title}
+                          primary={datas[0]?.venue?.title}
                         ></ListItemText>
                       </span>
                       <span className="span">
@@ -380,7 +380,7 @@ const BookEvent = () => {
                           <LocationOnIcon />
                         </ListItemIcon>
                         <ListItemText
-                          primary={datas[0]?.venue.place}
+                          primary={datas[0]?.venue?.place}
                         ></ListItemText>
                       </span>
                     </ListItems>
@@ -403,7 +403,7 @@ const BookEvent = () => {
                           <EventSeatIcon />
                         </ListItemIcon>
                         <ListItemText
-                          primary={datas[0]?.venue.maximumSeats}
+                          primary={datas[0]?.venue?.maximumSeats}
                         ></ListItemText>
                       </span>
                       <span className="span">

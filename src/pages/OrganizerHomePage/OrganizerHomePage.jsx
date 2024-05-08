@@ -25,9 +25,11 @@ function OrganizerHomePage() {
   const [data, setData] = useState([]);
   const [organizerName,setOrganizerName] = useState('')
 
+  const organizerId = localStorage.getItem("organizerId")
+
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/getallvenues");
+      const response = await axios.get(`/api/getallvenues/${organizerId}`);
 
       setData(response.data.data);
     } catch (err) {
@@ -88,7 +90,7 @@ function OrganizerHomePage() {
             </MenuItem>
             <MenuItem
               icon={<AddBoxIcon />}
-              onClick={() => setChildren(<CreateVenue data={data} />)}
+              onClick={() => setChildren(<CreateVenue />)}
             >
               Create New venue
             </MenuItem>

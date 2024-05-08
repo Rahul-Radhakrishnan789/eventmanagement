@@ -17,6 +17,8 @@ const CreateVenue = () => {
         images: [],
     });
 
+    const organizerId = localStorage.getItem("organizerId")
+
     // --taost--------------------
     const [open, setOpen] = useState(false);
     const handleClick = () => {
@@ -85,7 +87,7 @@ const CreateVenue = () => {
                 alert("Please fill in all required fields!");
                 return;
             }
-            const response = await axios.post("/api/createvenue", formDataToSend, {
+            const response = await axios.post(`/api/createvenue/${organizerId}`, formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

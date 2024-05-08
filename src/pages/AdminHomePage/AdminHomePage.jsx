@@ -3,16 +3,13 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState, useEffect } from "react";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import { Box, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ShowAllEvents from "../../components/organizerComponents/showAllEvents";
-import CreateVenue from "../../components/adminComponents/createVenue";
-import ShowAllVenue from "../../components/adminComponents/showAllVenue";
 import UserTable from "../../components/adminComponents/userTable";
 import OrganizerTable from "../../components/adminComponents/organizerTable";
+import UserEvents from "../UserHomePage/UserEvents";
 
 const SideBars = styled(Sidebar)`
     .ps-sidebar-container {
@@ -22,7 +19,7 @@ const SideBars = styled(Sidebar)`
 
 const AdminHomePage = () => {
     const { collapseSidebar } = useProSidebar();
-    const [children, setChildren] = useState(<ShowAllEvents />);
+    const [children, setChildren] = useState(<UserEvents />);
     const nav = useNavigate()
 
     return (
@@ -40,7 +37,7 @@ const AdminHomePage = () => {
                             {" "}
                             <h2>Admin</h2>
                         </MenuItem>
-                        <MenuItem onClick={() => setChildren(<ShowAllEvents />)} icon={<PeopleOutlinedIcon />}>
+                        <MenuItem onClick={() => setChildren(<UserEvents />)} icon={<PeopleOutlinedIcon />}>
                             Events
                         </MenuItem>
                         <MenuItem onClick={() => setChildren(<UserTable />)} icon={<AssignmentIndIcon />}>

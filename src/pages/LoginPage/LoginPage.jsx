@@ -15,9 +15,14 @@ function LoginPage() {
 
   const [loginPassword, setloginPassword] = useState("");
   const [isChecked, setIsChecked]=useState(false)
-  
+  const [userEmailInput, setUserEmailInput] = useState('');
 
-  const userEmail = localStorage.getItem("userEmail");
+
+
+  const handleEmailChange = (event) => {
+    setUserEmailInput(event.target.value);
+  };
+
 
   //functionality for organizer is true or false
       
@@ -31,7 +36,7 @@ function LoginPage() {
     try {
       const response = await axios.post("/api/commonlogin", {
         password: loginPassword,
-        email:userEmail,
+        email:userEmailInput,
         isOrganizer:isChecked
 
       });
@@ -78,7 +83,7 @@ function LoginPage() {
         color: "#000",
       },
     });
-  },[userEmail])
+  },[])
 
   return (
     <div className={styles.mainbody}>
@@ -91,7 +96,8 @@ function LoginPage() {
 
                 <div className={styles.inputbox}>
                   <input type="text" 
-                  defaultValue={userEmail}
+                   value={userEmailInput}
+                   onChange={handleEmailChange}
                    required />
                   <label>Email</label>
                 </div>

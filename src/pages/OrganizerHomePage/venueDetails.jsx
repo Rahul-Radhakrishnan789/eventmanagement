@@ -138,7 +138,7 @@ const VenueDetails = () => {
 
   const fetchData = async () => {
       try {
-          const response = await axios.get("/api/getallvenues");
+          const response = await axios.get("/api/gettotalvenues");
           setData(response.data.data.filter((itm) => itm._id === id));
       } catch (err) {
           console.error("venue fetching error:", err);
