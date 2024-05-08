@@ -195,7 +195,13 @@ export const UserBooking = () => {
                             secondary={event.totalAmount}
                           />
                         </ListItems>
-                        <button onClick={handleOpen}>Cancel</button>
+                        {event?.isCancelled ? (
+                          <button>Canceled</button>
+                        ) : (
+                         
+                          <button onClick={handleOpen}>Cancel</button>
+                        )}
+                       
                       </Box>
                     </Lists>
                   </CardContents>

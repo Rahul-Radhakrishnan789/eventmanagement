@@ -379,7 +379,7 @@ function ShowAllEvents() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              bgcolor: "red",
+              bgcolor: "black",
               padding: "16px",
             }}
           >
@@ -408,7 +408,7 @@ function ShowAllEvents() {
               <Box
                 key={index}
                 sx={{
-                  bgcolor: index % 2 === 0 ? "black" : "gray",
+                  bgcolor: user?.isCancelled ? "red" : "green",
                   color: "white",
                   padding: "8px",
                   marginBottom: "8px",
@@ -432,6 +432,9 @@ function ShowAllEvents() {
                 <span>
                   <Typography color={"coral"}>Total Tickets:</Typography>
                   {user?.totalTickets}
+                </span>
+                <span>
+                  {user?.isCancelled ? ("ORDER CANCELLED") : ("")}
                 </span>
               </Box>
             ))}
