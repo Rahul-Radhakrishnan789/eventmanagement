@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Box, TextField, Button, FormControl, IconButton } from "@mui/material";
+import { Box, TextField, Button, FormControl, IconButton, CircularProgress } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -16,6 +16,8 @@ const CreateVenue = () => {
         mapUrl: "",
         images: [],
     });
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const organizerId = localStorage.getItem("organizerId")
 
@@ -83,10 +85,7 @@ const CreateVenue = () => {
                 }
             }
 
-            if (!formData.title || !formData.place) {
-                alert("Please fill in all required fields!");
-                return;
-            }
+            setIsLoading(true)
             const response = await axios.post(`/api/createvenue/${organizerId}`, formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -99,29 +98,30 @@ const CreateVenue = () => {
             toast.success("venue created Successful", {
                 duration: 3000,
                 style: {
-                  borderRadius: "10px",
-                  color: "#000",
+                    borderRadius: "10px",
+                    color: "#000",
                 },
-              });
+            });
 
-              setTimeout(() => {
+            setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+            }, 3000);
 
         } catch (error) {
             toast.error(error.response.data.message, {
                 duration: 3000,
                 style: {
-                  borderRadius: "10px",
-                  background: "#e24242",
-                  color: "#fff",
+                    borderRadius: "10px",
+                    background: "#e24242",
+                    color: "#fff",
                 },
-              });
+            });
+            setIsLoading(false)
             console.error("venue Registration error:", error);
             console.log("Response:", error.response);
         }
 
-         setFormData({
+        setFormData({
             title: "",
             place: "",
             facilities: [],
@@ -131,7 +131,7 @@ const CreateVenue = () => {
             images: [],
         });
 
-         handleClick();
+        handleClick();
     };
 
     return (
@@ -161,7 +161,7 @@ const CreateVenue = () => {
                         label="Facilities"
                         name="facilities"
                         placeholder='separate facilities with "," '
-            value={formData.facilities}
+                        value={formData.facilities}
                         onChange={handleChange}
                         sx={sx.inputBox}
                     />
@@ -169,7 +169,7 @@ const CreateVenue = () => {
                         label="Map url"
                         name="mapUrl"
                         placeholder="fetch mapurl from google maps"
-            value={formData.mapUrl}
+                        value={formData.mapUrl}
                         onChange={handleChange}
                         sx={sx.inputBox}
                     />
@@ -200,9 +200,13 @@ const CreateVenue = () => {
                         onChange={handleImageUpload}
                     />
                     <p>Select 5 images</p>
-                    <Button sx={sx.submitButton} type="submit" variant="contained">
-                        Submit
-                    </Button>
+                    {isLoading ? (
+                        <CircularProgress />
+                    ) : (
+                        <Button sx={sx.submitButton} type="submit" variant="contained">
+                            Submit
+                        </Button>
+                    )}
                 </Box>
             </form>
             <Toaster />

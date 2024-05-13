@@ -59,7 +59,7 @@ const ShowAllVenue = () => {
         try {
             const response = await axios.get("/api/getallvenues");
 
-            setData(response.data.data);
+            setData(response?.data?.data);
         } catch (err) {
             console.error("venue fetching error:", err);
             console.log("Response:", err.response);
@@ -78,7 +78,7 @@ const ShowAllVenue = () => {
                     <Grid item xs={12} sm={6} lg={3}>
                         <Cards>
                             <ImageBox>
-                                <img src={venue?.images[0].url} alt="Venue Image" />
+                                <img src={venue?.images[0]?.url} alt="Venue Image" />
                             </ImageBox>
                             <CardContents>
                                 <Lists>

@@ -1,11 +1,12 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   TextField,
   Button,
   FormControl,
   FormHelperText,
+  CircularProgress
 } from "@mui/material";
 import axios from "../../utils/AxiosInstance";
 
@@ -22,6 +23,7 @@ function CreateEvents() {
   });
 
   const [venueData, setVenueData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
   console.log(venueData);
 
   const fetchData = async () => {
@@ -48,7 +50,9 @@ function CreateEvents() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("first");
+    
     try {
+      setIsLoading(true)
       if (!formData.title || !formData.category || !formData.Ticketprice) {
         alert("Please fill in all required fields!");
         return;
@@ -65,10 +69,10 @@ function CreateEvents() {
       console.log("Registration successful:", response.data);
 
       console.log("Submitting form:", formData);
-     
 
-    } catch (error) {
     
+    } catch (error) {
+      setIsLoading(false)
       console.error("Event Registration error:", error);
       console.log("Response:", error.response);
     }
@@ -151,12 +155,18 @@ function CreateEvents() {
             onDrop={console.log}
             dropzoneText="Add an image here"
           />
-          <Button sx={sx.submitButton} type="submit" variant="contained">
-            Submit
-          </Button>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Button sx={sx.submitButton} type="submit" variant="contained">
+              Submit
+            </Button>
+          )}
+
+
         </Box>
       </form>
-  
+
     </Box>
   );
 }
